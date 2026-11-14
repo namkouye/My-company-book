@@ -47,7 +47,7 @@ export default function App() {
   const transactions = useLiveQuery(() => companyId ? db.transactions.where('companyId').equals(companyId).toArray() : [], [companyId], []);
   const categories = useLiveQuery(() => companyId ? db.categories.where('companyId').equals(companyId).sortBy('sortOrder') : [], [companyId], []);
   const accounts = useLiveQuery(() => companyId ? db.accounts.where('companyId').equals(companyId).toArray() : [], [companyId], []);
-  const splits = useLiveQuery(() => db.transactionSplits.toArray(), [], []);
+  const splits = useLiveQuery(() => companyId ? db.transactionSplits.where('companyId').equals(companyId).toArray() : [], [companyId], []);
   const activeCategories = categories.filter(c => c.active);
   const sortedTransactions = useMemo(() => [...transactions].sort((a,b) => b.transactionDate.localeCompare(a.transactionDate) || b.createdAt.localeCompare(a.createdAt)), [transactions]);
   const filteredTransactions = useMemo(() => sortedTransactions.filter(t => {
@@ -84,7 +84,7 @@ export default function App() {
     await db.transaction('rw', db.transactions, db.transactionSplits, async () => {
       await db.transactions.put(record);
       await db.transactionSplits.where('transactionId').equals(record.id).delete();
-      if (validSplits.length) await db.transactionSplits.bulkAdd(validSplits.map(s => ({ id: crypto.randomUUID(), transactionId: record.id, categoryId: s.categoryId, amount: Number(s.amount), taxAmount: s.taxAmount === '' ? undefined : Number(s.taxAmount) })));
+      if (validSplits.length) await db.transactionSplits.bulkAdd(validSplits.map(s => ({ id: crypto.randomUUID(), companyId, transactionId: record.id, categoryId: s.categoryId, amount: Number(s.amount), taxAmount: s.taxAmount === '' ? undefined : Number(s.taxAmount) })));
     });
     setModalOpen(false); setEditing(null);
   }
