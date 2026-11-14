@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LayoutDashboard, Receipt, Landmark, CreditCard, FolderOpen, ChartNoAxesCombined, FileSpreadsheet, Settings, ArrowLeftRight, Menu, Plus, Search, Bell, ChevronDown } from 'lucide-react';
+import { LayoutDashboard, Receipt, Landmark, CreditCard, FolderOpen, ChartNoAxesCombined, FileSpreadsheet, Settings, ArrowLeftRight, Plus, Search, Bell, ChevronDown } from 'lucide-react';
 const nav = [
  ['Dashboard',LayoutDashboard],['Transactions',ArrowLeftRight],['Bank Accounts',Landmark],['Credit Cards',CreditCard],
  ['Receipts & Documents',FolderOpen],['Investment Ledger',ChartNoAxesCombined],['Portfolio Snapshots',ChartNoAxesCombined],
