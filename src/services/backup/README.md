@@ -1,0 +1,1 @@
+Backup design requirement: export all IndexedDB records and receipt blobs into a versioned archive. Encrypt archive contents with a user-supplied passphrase using Web Crypto (AES-GCM + PBKDF2). Verify archive integrity and test restoration before release. Do not treat browser storage as a backup.
